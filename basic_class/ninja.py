@@ -84,13 +84,12 @@ class Ninja(object):
         return True
 
 # Low budget, unneccessary advertisement like introduction to Testing
+
 # Now the above game works good but there is a bug in it. We wanted to terminate the game once anyone of the players energy become 0 or less
 # But it went to a level once any one of the players energy became -5 and then says game over. So, from this simple class we can easily see
 # that as the code grows the complexity grows with it. Hence it becomes hard for us to ensure that everything works as we expected. I know
 # that above bug is a very small one which needs an '=' to solve it, but think about a code base of 100's or 1000's or even millions of lines
 # of code. 
-
-
 # Do you think you could easily track the code and fix the bug. 
 # Even if you fix the bug, you may not know whether your fix broke the 
 # program somewhere else and maybe induced a number of bugs.
@@ -138,3 +137,57 @@ class Ninja(object):
             print "You win!"
             return False
         return True
+
+# Most games, especially the fighting ones provide super powers to the players. We don't have a super cool game yet. Yet, we could 
+# add extra moves like if a player hits another player after jump then the opponent's energy would be reduced by 10. So does the kick works
+# the same way.
+
+class Ninja(object):
+    def __init__(self, name):
+        self.name = name
+        self.energy = 100
+        self.jump_flag = False
+        print """creating an object ("""+name+""") of type Ninja.....
+                 to kick use, object.kick(other_object_to_be_kicked) method,
+                 to hit use, object.hit(other_object_to_be_kicked) method,
+                 to jump use, object.jump(other_object_to_be_kicked) method"""
+
+    def kick(self, other_object):
+        if self.win_check(other_object):
+            print self.name+" is kicking "+other_object.name+"'s ass"
+            if self.jump_flag == True:
+                other_object.energy -=10
+                self.jump_flag = False
+            else:
+                other_object.energy -=5
+            print self.name+"'s energy:",self.energy," and "+other_object.name+"'s energy:"+str(other_object.energy)
+        else:
+            print "Game already Over!"
+
+    def hit(self, other_object):
+        if self.win_check(other_object):
+            print self.name+" is hitting "+other_object.name+"'s ass"
+            if self.jump_flag == True:
+                other_object.energy -=10
+                self.jump_flag = False
+            else:
+                other_object.energy -=5
+
+            print self.name+"'s energy:",self.energy," and "+other_object.name+"'s energy:"+str(other_object.energy)
+        else:
+            print "Game already Over!"
+
+    def jump(self):
+        print self.name+" is flying high"
+        self.jump_flag = True
+
+    def win_check(self, other_object):
+        if self.energy <= 0:
+            print "You loose!"
+            return False
+        elif other_object.energy <= 0:
+            print "You win!"
+            return False
+        return True
+
+
